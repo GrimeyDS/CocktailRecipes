@@ -1,0 +1,25 @@
+﻿@using Pin.OpenData.Core.Entities;
+
+<button class="btn btn-primary" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
+@foreach(var drink in Drinks)
+{
+    <div class="row">
+        <div class="col col-lg-3 mx-auto">
+            <div class="card" style="width: 18rem;">
+                <img src="@drink.ImageUrl" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">@drink.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@drink.Category</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Drink[] Drinks { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+}

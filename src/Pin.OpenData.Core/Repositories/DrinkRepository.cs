@@ -1,6 +1,6 @@
-﻿using Pin.OpenData.Core.Entities;
+﻿using Newtonsoft.Json;
+using Pin.OpenData.Core.Entities;
 using Pin.OpenData.Core.Repositories.Interfaces;
-using System.Diagnostics;
 
 namespace Pin.OpenData.Core.Repositories
 {
@@ -10,8 +10,12 @@ namespace Pin.OpenData.Core.Repositories
 
         public DrinkRepository()
         {
-            // add csv data
-            _drinks = new List<Drink>();
+            Uri uri = new Uri("Data/cocktails.json", UriKind.Relative);
+            using (StreamReader file = File.OpenText(uri.ToString()))
+            {
+                _drinks = JsonConvert.DeserializeObject<List<Drink>>(file.ReadToEnd());
+            }
+           
         }
 
         public Task CreateAsync(Drink entity)

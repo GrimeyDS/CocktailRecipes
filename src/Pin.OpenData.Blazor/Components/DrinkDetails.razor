@@ -1,0 +1,36 @@
+﻿@using Pin.OpenData.Core.Entities;
+
+<button class="btn btn-warning" @onclick=" e=> OnReturn.InvokeAsync()">Return</button>
+
+<h3>@Drink.Name</h3>
+
+<img src="@Drink.ImageUrl" />
+
+<h4>Category:</h4>
+<p>@Drink.Category</p>
+
+<h4>Alcoholic?</h4>
+<p>@(Drink.IsAlcoholic ? "Yes" : "No")</p>
+
+<h4>Glass:</h4>
+<p>@Drink.Glass</p>
+
+<h4>Ingredients:</h4>
+<ul>
+    @foreach (var ingredient in Drink.Ingredients)
+    {
+        <li>@ingredient.Amount @ingredient.Name</li>
+    }
+</ul>
+
+<h4>Instructions:</h4>
+<p>@Drink.Instructions</p>
+
+
+@code {
+    [Parameter]
+    public Drink Drink { get; set; }
+
+    [Parameter]
+    public EventCallback OnReturn { get; set; }
+}

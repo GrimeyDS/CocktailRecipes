@@ -1,3 +1,9 @@
+using Pin.OpenData.Core.Entities;
+using Pin.OpenData.Core.Repositories;
+using Pin.OpenData.Core.Repositories.Interfaces;
+using Pin.OpenData.Core.Services;
+using Pin.OpenData.Core.Services.Interfaces;
+
 namespace Pin.OpenData.Blazor
 {
     public class Program
@@ -5,6 +11,10 @@ namespace Pin.OpenData.Blazor
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddTransient<IBaseRepository<Drink>, DrinkRepository>();
+
+            builder.Services.AddTransient<IDrinkService<Drink>, DrinkService>();
 
             // Add services to the container.
             builder.Services.AddRazorPages();

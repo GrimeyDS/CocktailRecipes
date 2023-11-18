@@ -1,18 +1,20 @@
 ﻿@using Pin.OpenData.Core.Entities;
 
-<button class="btn btn-primary" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
+<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
 @foreach(var drink in Drinks)
 {
     <div class="row">
         <div class="col col-lg-3 mx-auto">
-            <div class="card" style="width: 18rem;" @onclick="e => OnSelect.InvokeAsync(drink)">
-                <img src="@drink.ImageUrl" class="card-img-top">
+            <div class="card" style="width: 18rem;" >
+                <img src="@drink.ImageUrl" class="card-img-top" @onclick="e => OnSelect.InvokeAsync(drink)">
                 <div class="card-body">
-                    <h5 class="card-title" >@drink.Name</h5>
+                    <h5 class="card-title" @onclick="e => OnSelect.InvokeAsync(drink)">@drink.Name</h5>
                     <h6 class="card-subtitle mb-2 text-muted">@drink.Category</h6>
                 </div>
+                <div class="btn-container">
+                <button class="btn btn-info" @onclick="e => OnEdit.InvokeAsync(drink)">Edit</button>
                 <button class="btn btn-close" @onclick="e => OnDelete.InvokeAsync(drink)"></button>
-                <button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(drink)">edit</button>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,38 @@
+﻿@using Pin.OpenData.Core.Entities;
+
+@foreach (var ingredient in Drink.Ingredients)
+{
+    <div>
+        <label for="Amount">Amount: </label>
+        <InputText id="Amount" class="form-control" @bind-Value="ingredient.Amount"></InputText>
+        <ValidationMessage For="@(() => ingredient.Amount)" />
+        <label for="Name">Name: </label>
+        <InputText id="Name" class="form-control" @bind-Value="ingredient.Name"></InputText>
+        <ValidationMessage For="@(() => ingredient.Name)" />
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Drink Drink { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if(Drink.Ingredients == null)
+        {
+            Drink.Ingredients = new List<Ingredient>();
+        };
+
+        var ingredientCount = Drink.Ingredients.Count;
+
+        if(ingredientCount <= 5)
+        {
+            for (int i = 0; i < 10 - ingredientCount; i++)
+            {
+                Drink.Ingredients.Add(new Ingredient());
+            };
+        };
+
+    }
+
+}

@@ -17,7 +17,7 @@ else if(showDetails)
 }
 else
 {
-    <DrinkForm Drink="currentDrink" OnSave="SaveDrink"></DrinkForm>
+    <DrinkForm Drink="currentDrink" OnSave="SaveDrink" OnReturn="ReturnToDrinks"></DrinkForm>
 }
 
 
@@ -38,6 +38,7 @@ else
     {
         allDrinks = (await drinkService.GetAllAsync()).ToArray();
         currentDrink = null;
+        showDetails = false;
     }
 
     private void AddDrink()
@@ -76,6 +77,7 @@ else
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             error = ex.Message;
         }
     }

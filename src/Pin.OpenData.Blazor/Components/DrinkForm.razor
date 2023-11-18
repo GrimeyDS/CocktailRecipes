@@ -40,8 +40,10 @@
         <ValidationMessage For="@(() => Drink.Instructions)" />
     </div>
 
+    <IngredientsForm Drink="@Drink"></IngredientsForm>
+
     <button type="submit" class="btn btn-primary">Save</button>
-    <button type="button" class="btn btn-warning">Cancel</button>
+    <button type="button" class="btn btn-warning" @onclick="e => OnReturn.InvokeAsync()">Cancel</button>
 
 </EditForm>
 
@@ -50,11 +52,13 @@
     public Drink Drink { get; set; }
 
     [Parameter]
+    public Ingredient Ingredient { get; set; }
+
+    [Parameter]
     public EventCallback<Drink> OnSave { get; set; }
 
-    protected override void OnInitialized()
-    {
-        if (Drink.Ingredients == null)
-            Drink.Ingredients = new List<Ingredient>();
-    }
+    [Parameter]
+    public EventCallback OnReturn { get; set; }
+
+    private Ingredient[] Ingredients { get; set; }
 }

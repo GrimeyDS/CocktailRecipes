@@ -22,7 +22,7 @@ namespace Pin.OpenData.Core.Services
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            if (entity.Ingredients == null || entity.Ingredients.Count == 0)
+            if (entity.Ingredients == null)
                 throw new ArgumentNullException(nameof(entity.Ingredients));
 
             if (drinks.Any(d => d.Name.ToUpper().Equals(entity.Name.ToUpper())))
@@ -62,7 +62,7 @@ namespace Pin.OpenData.Core.Services
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            if (entity.Ingredients == null || entity.Ingredients.Count == 0)
+            if (entity.Ingredients == null)
                 throw new ArgumentNullException(nameof(entity.Ingredients));
 
 

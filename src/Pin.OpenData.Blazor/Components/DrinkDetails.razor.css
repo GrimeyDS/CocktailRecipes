@@ -1,0 +1,40 @@
+﻿img {
+    max-width: 600px;
+    max-height: 600px;
+    display: inline-block;
+    float: left;
+    margin-top: 50px;
+}
+
+div {
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 50px;
+    position: absolute;
+}
+
+button {
+    display: block;
+    margin-bottom: 10px;
+    background-color: #354230;
+    color: white;
+}
+
+.separator {
+    background-color: #354230;
+    width: 1px;
+    height: 700px;
+
+    margin-left: 10px;
+    margin-top: 0px;
+}
+
+h3, h4 {
+    color: #354230;
+    margin-bottom: 1px;
+}
+
+h3 {
+    font-size: 40px;
+   
+}

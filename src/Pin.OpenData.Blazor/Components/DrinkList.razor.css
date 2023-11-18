@@ -1,0 +1,8 @@
+﻿.row{
+    display: inline-block;
+    margin: 5px;
+}
+
+button{
+    display: block;
+}

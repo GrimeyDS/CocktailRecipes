@@ -1,5 +1,60 @@
-﻿<h3>DrinkForm</h3>
+﻿@using Pin.OpenData.Core.Entities;﻿
+
+<EditForm Model="@Drink" OnValidSubmit="e => OnSave.InvokeAsync(Drink)" >
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div>
+        <label for="Name">Name: </label>
+        <InputText id="Name" class="form-control" @bind-Value="Drink.Name"></InputText>
+        <ValidationMessage For="@(() => Drink.Name)" />
+    </div>
+
+    <div>
+        <label for="Glass">Glass: </label>
+        <InputText id="Glass" class="form-control" @bind-Value="Drink.Glass"></InputText>
+        <ValidationMessage For="@(() => Drink.Glass)" />
+    </div>
+
+    <div>
+        <label for="Category">Category: </label>
+        <InputText id="Category" class="form-control" @bind-Value="Drink.Category"></InputText>
+        <ValidationMessage For="@(() => Drink.Category)" />
+    </div>
+
+    <div>
+        <label for="ImageUrl">Link to image: </label>
+        <InputText id="ImageUrl" class="form-control" @bind-Value="Drink.ImageUrl"></InputText>
+        <ValidationMessage For="@(() => Drink.ImageUrl)" />
+    </div>
+
+    <div>
+        <label for="IsAlcoholic">Alcoholic? </label>
+        <InputCheckbox id="IsAlcoholic" @bind-Value="Drink.IsAlcoholic"></InputCheckbox>
+        <ValidationMessage For="@(() => Drink.IsAlcoholic)" />
+    </div>
+
+    <div>
+        <label for="Instructions">Instructions: </label>
+        <InputTextArea id="Instructions" class="form-control" @bind-Value="Drink.Instructions"></InputTextArea>
+        <ValidationMessage For="@(() => Drink.Instructions)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-warning">Cancel</button>
+
+</EditForm>
 
 @code {
+    [Parameter]
+    public Drink Drink { get; set; }
 
+    [Parameter]
+    public EventCallback<Drink> OnSave { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Drink.Ingredients == null)
+            Drink.Ingredients = new List<Ingredient>();
+    }
 }

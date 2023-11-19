@@ -3,34 +3,35 @@
 <button class="btn btn-warning" @onclick=" e=> OnReturn.InvokeAsync()">Return</button>
 
 <img src="@Drink.ImageUrl" />
+
 <div class="separator"></div>
 
-<div>
-<h3>@Drink.Name</h3>
+    <div class="info">
+        <h3>@Drink.Name</h3>
 
-<h4>Category:</h4>
-<p>@Drink.Category</p>
+        <h4>Category:</h4>
+        <p>@Drink.Category</p>
 
-<h4>Alcoholic?</h4>
-<p>@(Drink.IsAlcoholic ? "Yes" : "No")</p>
+        <h4>Alcoholic?</h4>
+        <p>@(Drink.IsAlcoholic ? "Yes" : "No")</p>
 
-<h4>Glass:</h4>
-<p>@Drink.Glass</p>
+        <h4>Glass:</h4>
+        <p>@Drink.Glass</p>
 
-<h4>Ingredients:</h4>
-<ul>
-    @foreach (var ingredient in Drink.Ingredients)
-    {
-        if(ingredient.Amount != null || ingredient.Name != null)
-        {
-            <li>@ingredient.Amount @ingredient.Name</li>
-        }  
-    }
-</ul>
+        <h4>Ingredients:</h4>
+        <ul>
+            @foreach (var ingredient in Drink.Ingredients)
+            {
+                if(ingredient.Amount != null || ingredient.Name != null)
+                {
+                    <li>@ingredient.Amount @ingredient.Name</li>
+                }  
+            }
+        </ul>
 
-<h4>Instructions:</h4>
-<p>@Drink.Instructions</p>
-</div>
+        <h4>Instructions:</h4>
+        <p>@Drink.Instructions</p>
+    </div>
 
 
 @code {

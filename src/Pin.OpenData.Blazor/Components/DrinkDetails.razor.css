@@ -9,6 +9,9 @@
 div {
     display: inline-block;
     margin-left: 20px;
+}
+
+.info {
     margin-top: 50px;
     position: absolute;
 }
@@ -24,7 +27,7 @@ button {
     background-color: #354230;
     width: 1px;
     height: 700px;
-
+    
     margin-left: 10px;
     margin-top: 0px;
 }

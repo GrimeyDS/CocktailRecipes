@@ -4,7 +4,7 @@
 <EditForm Model="@Drink" OnValidSubmit="e => OnSave.InvokeAsync(Drink)" >
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
-
+        <h3>General info:</h3>
     <div class="row">
         <div class="col-4">
             <InputText id="name" class="form-control form-control-sm" @bind-Value="Drink.Name" placeholder="Name of drink"></InputText>
@@ -38,6 +38,8 @@
 
         <IngredientsForm Drink="@Drink"></IngredientsForm>
 
+
+        <h3>Instructions:</h3>
     <div class="row">
         <div>
             <InputTextArea id="instructions" class="form-control form-control-sm" @bind-Value="Drink.Instructions" placeholder="Instructions"></InputTextArea>

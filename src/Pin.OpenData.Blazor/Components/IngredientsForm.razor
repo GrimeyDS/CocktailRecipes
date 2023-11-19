@@ -2,13 +2,16 @@
 
 @foreach (var ingredient in Drink.Ingredients)
 {
-    <div>
-        <label for="Amount">Amount: </label>
-        <InputText id="Amount" class="form-control" @bind-Value="ingredient.Amount"></InputText>
-        <ValidationMessage For="@(() => ingredient.Amount)" />
-        <label for="Name">Name: </label>
-        <InputText id="Name" class="form-control" @bind-Value="ingredient.Name"></InputText>
+    <div class="row">
+        <div class="col-3">
+            <InputText id="amount" class="form-control form-control-sm" @bind-Value="ingredient.Amount" placeholder="Amount"></InputText>
+            <ValidationMessage For="@(() => ingredient.Amount)" />
+        </div>
+        
+        <div class="col-9">
+        <InputText id="name" class="form-control form-control-sm" @bind-Value="ingredient.Name" placeholder="Ingredient"></InputText>
         <ValidationMessage For="@(() => ingredient.Name)" />
+            </div>
     </div>
 }
 

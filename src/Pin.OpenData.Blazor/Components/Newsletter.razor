@@ -3,8 +3,15 @@
 
 @if (Subscriber.IsSubscribed)
 {
-    <p>Thank you for subscribing!</p>
-    <button class="btn btn-close" @onclick="e => OnClose.InvokeAsync()"></button>
+    <div class="alert alert-secondary mt-4 row">
+        <div class="col-11">
+            <span class="oi oi-check me-2" aria-hidden="true"></span>
+            <strong>Thank you for subscribing!</strong>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-close" @onclick="e => OnClose.InvokeAsync()"></button>
+        </div>
+    </div>
 }
 else
 {
@@ -14,11 +21,16 @@ else
         <EditForm Model="Subscriber" OnValidSubmit="e => OnSubscribe.InvokeAsync()">
             <DataAnnotationsValidator></DataAnnotationsValidator>
 
-            <br />
-            <InputText id="email" class="form-text" @bind-Value="Subscriber.Email" />
-
-            <ValidationMessage For="@(() => Subscriber.Email)" />
-            <button type="submit" class="btn btn-primary">Subscribe!</button>
+            <div class="row">
+                <div class="col-9">
+                <InputText id="email" class="form-control" @bind-Value="Subscriber.Email" placeholder="Email-address" />
+                    <ValidationMessage For="@(() => Subscriber.Email)" />
+                </div>
+                 
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary">Subscribe!</button>
+            </div>
+</div>
         </EditForm>
 
     </div>

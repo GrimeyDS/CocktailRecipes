@@ -1,51 +1,57 @@
 ﻿@using Pin.OpenData.Core.Entities;﻿
 
+<div class="form">
 <EditForm Model="@Drink" OnValidSubmit="e => OnSave.InvokeAsync(Drink)" >
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
 
-    <div>
-        <label for="Name">Name: </label>
-        <InputText id="Name" class="form-control" @bind-Value="Drink.Name"></InputText>
-        <ValidationMessage For="@(() => Drink.Name)" />
+    <div class="row">
+        <div class="col-4">
+            <InputText id="name" class="form-control form-control-sm" @bind-Value="Drink.Name" placeholder="Name of drink"></InputText>
+            <ValidationMessage For="@(() => Drink.Name)" />
+        </div>
+
+            <div class="col-4">
+            <InputText id="glass" class="form-control form-control-sm" @bind-Value="Drink.Glass" placeholder="Glass of drink"></InputText>
+            <ValidationMessage For="@(() => Drink.Glass)" />
+        </div>
+
+
+        <div class="col-4">
+            <InputText id="category" class="form-control form-control-sm" @bind-Value="Drink.Category" placeholder="Category of drink"></InputText>
+            <ValidationMessage For="@(() => Drink.Category)" />
+        </div>
     </div>
 
-    <div>
-        <label for="Glass">Glass: </label>
-        <InputText id="Glass" class="form-control" @bind-Value="Drink.Glass"></InputText>
-        <ValidationMessage For="@(() => Drink.Glass)" />
+    <div class="row">
+            <div class="col-3">
+            <InputCheckbox id="isAlcoholic" @bind-Value="Drink.IsAlcoholic"></InputCheckbox>
+            <ValidationMessage For="@(() => Drink.IsAlcoholic)" />
+            <label for="IsAlcoholic">Alcoholic </label>
+
+        </div>
+            <div class="col-9">
+                <InputText id="ImageUrl" class="form-control form-control-sm" @bind-Value="Drink.ImageUrl" placeholder="Image URL"></InputText>
+            <ValidationMessage For="@(() => Drink.ImageUrl)" />
+        </div>
     </div>
 
-    <div>
-        <label for="Category">Category: </label>
-        <InputText id="Category" class="form-control" @bind-Value="Drink.Category"></InputText>
-        <ValidationMessage For="@(() => Drink.Category)" />
+        <IngredientsForm Drink="@Drink"></IngredientsForm>
+
+    <div class="row">
+        <div>
+            <InputTextArea id="instructions" class="form-control form-control-sm" @bind-Value="Drink.Instructions" placeholder="Instructions"></InputTextArea>
+            <ValidationMessage For="@(() => Drink.Instructions)" />
+        </div>
     </div>
 
-    <div>
-        <label for="ImageUrl">Link to image: </label>
-        <InputText id="ImageUrl" class="form-control" @bind-Value="Drink.ImageUrl"></InputText>
-        <ValidationMessage For="@(() => Drink.ImageUrl)" />
-    </div>
 
-    <div>
-        <label for="IsAlcoholic">Alcoholic? </label>
-        <InputCheckbox id="IsAlcoholic" @bind-Value="Drink.IsAlcoholic"></InputCheckbox>
-        <ValidationMessage For="@(() => Drink.IsAlcoholic)" />
-    </div>
-
-    <div>
-        <label for="Instructions">Instructions: </label>
-        <InputTextArea id="Instructions" class="form-control" @bind-Value="Drink.Instructions"></InputTextArea>
-        <ValidationMessage For="@(() => Drink.Instructions)" />
-    </div>
-
-    <IngredientsForm Drink="@Drink"></IngredientsForm>
 
     <button type="submit" class="btn btn-primary">Save</button>
     <button type="button" class="btn btn-warning" @onclick="e => OnReturn.InvokeAsync()">Cancel</button>
 
 </EditForm>
+</div>
 
 @code {
     [Parameter]

@@ -1,0 +1,26 @@
+﻿.btn-primary {
+    background-color: #354230;
+    border-color: #007bff;
+    display: inline-block
+}
+
+div {
+    width: 500px;
+    margin-bottom: 2px;
+    margin-left: auto;
+    margin-right: 70px;
+}
+
+.form-field {
+    width: 500px;
+    display: inline-block;
+}
+
+.btn-close {
+    display: inline-block;
+}
+
+p {
+    display: inline-block;
+}
+

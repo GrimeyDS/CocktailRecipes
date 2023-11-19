@@ -1,0 +1,37 @@
+﻿@using Pin.OpenData.Core.Entities;
+
+
+@if (Subscriber.IsSubscribed)
+{
+    <p>Thank you for subscribing!</p>
+    <button class="btn btn-close" @onclick="e => OnClose.InvokeAsync()"></button>
+}
+else
+{
+    <div class="alert alert-secondary mt-4">
+        <span class="oi oi-pencil me-2" aria-hidden="true"></span>
+        <strong>Subscribe to our newsletter</strong>
+        <EditForm Model="Subscriber" OnValidSubmit="e => OnSubscribe.InvokeAsync()">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+
+            <br />
+            <InputText id="email" class="form-text" @bind-Value="Subscriber.Email" />
+
+            <ValidationMessage For="@(() => Subscriber.Email)" />
+            <button type="submit" class="btn btn-primary">Subscribe!</button>
+        </EditForm>
+
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public EventCallback OnSubscribe { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    [Parameter]
+    public Subscriber Subscriber { get; set; }
+}

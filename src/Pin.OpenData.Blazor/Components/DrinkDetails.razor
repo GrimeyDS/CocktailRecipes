@@ -40,4 +40,14 @@
 
     [Parameter]
     public EventCallback OnReturn { get; set; }
+
+    public string ImageUrl { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Drink.ImageUrl))
+            Drink.ImageUrl = "../images/placeholderimage.png";
+        else
+            ImageUrl = Drink.ImageUrl;
+    }
 }

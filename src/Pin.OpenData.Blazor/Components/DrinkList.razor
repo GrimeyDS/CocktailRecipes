@@ -1,6 +1,4 @@
-﻿@using Pin.OpenData.Core.Entities;
-
-<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
+﻿<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
 @foreach(var drink in Drinks)
 {
     <div class="row">

@@ -7,10 +7,7 @@
 
 <PageTitle>Index</PageTitle>
 
-@if(!isSubscribed)
-{
-    <Newsletter Subscriber="Subscriber" OnSubscribe="Subscribe" OnClose="CloseNewsletter"></Newsletter>
-}
+<Newsletter></Newsletter>
 
 @if(currentDrink == null)
 {
@@ -28,11 +25,9 @@ else
 
 @code {
     private Drink[] allDrinks;
-    private Subscriber Subscriber = new Subscriber();
     private Drink currentDrink = null;
 
     private bool showDetails = false;
-    private bool isSubscribed = false;
     private string error;
 
     protected override async Task OnInitializedAsync()
@@ -96,15 +91,5 @@ else
     private async Task ReturnToDrinks()
     {
         await RefreshDrinks();
-    }
-
-    private void Subscribe()
-    {
-        Subscriber.IsSubscribed = true;
-    }
-
-    private void CloseNewsletter()
-    {
-        isSubscribed = true;
     }
 }

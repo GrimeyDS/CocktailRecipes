@@ -78,7 +78,6 @@ else
                 await drinkService.CreateAsync(drink);
             else
                 await drinkService.UpdateAsync(drink);
-            allDrinks = (await drinkService.GetAllAsync()).ToArray();
             await RefreshDrinks();
         }
         catch (Exception ex)

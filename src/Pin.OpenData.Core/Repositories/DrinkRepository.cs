@@ -26,7 +26,11 @@ namespace Pin.OpenData.Core.Repositories
 
         public Task DeleteAsync(int id)
         {
-            _drinks.Remove(_drinks.FirstOrDefault(x => x.Id == id));
+            var drink = _drinks.FirstOrDefault(x => x.Id == id);
+
+            if (drink == null)
+                throw new ArgumentException("Drink with this id does not exist");
+
             return Task.CompletedTask;
         }
 
@@ -44,6 +48,10 @@ namespace Pin.OpenData.Core.Repositories
         public Task UpdateAsync(Drink entity)
         {
             var drink = _drinks.FirstOrDefault(x => x.Id == entity.Id);
+
+            if (drink == null)
+                throw new ArgumentException("Drink with this id does not exist");
+
             drink = entity;
             return Task.CompletedTask;
         }

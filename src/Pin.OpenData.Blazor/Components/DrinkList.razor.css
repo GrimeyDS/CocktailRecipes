@@ -7,6 +7,8 @@
 .btn-warning {
     margin-bottom: 10px;
     display: block;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #354230;
     color: white;
 }

@@ -9,7 +9,8 @@
 }
 
 .topDiv {
-    display: inline-block;
+    display: block;
+    text-align: center;
 }
 
 span, h4 {

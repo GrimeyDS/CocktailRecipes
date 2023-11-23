@@ -1,0 +1,27 @@
+﻿span{
+    font-size: 13px;
+
+}
+
+.top{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.topDiv {
+    display: inline-block;
+}
+
+span, h4 {
+    color: #354230;
+    margin: 0 0.5rem;
+}
+
+h4 {
+    margin-top: 60px;
+    margin-bottom: 5px;
+}
+
+div{
+    display: inline-block;
+}

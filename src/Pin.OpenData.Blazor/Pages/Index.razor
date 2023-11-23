@@ -5,6 +5,7 @@
 <PageTitle>Index</PageTitle>
 
 <Newsletter></Newsletter>
+<Statistics Top="true" Stats="statistics"></Statistics>
 
 @if(currentDrink == null)
 {
@@ -20,9 +21,11 @@ else
 }
 
 
+
 @code {
     private Drink[] allDrinks;
     private Drink currentDrink = null;
+    private Statistic statistics;
 
     private bool showDetails = false;
     private string error;
@@ -35,6 +38,7 @@ else
     private async Task RefreshDrinks()
     {
         allDrinks = (await drinkService.GetAllAsync()).ToArray();
+        statistics = await drinkService.GetStatisticsAsync();
         currentDrink = null;
         showDetails = false;
     }

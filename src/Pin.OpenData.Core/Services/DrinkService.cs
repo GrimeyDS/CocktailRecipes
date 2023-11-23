@@ -74,5 +74,27 @@ namespace Pin.OpenData.Core.Services
 
             return _drinkRepository.UpdateAsync(entity);
         }
+
+        public Task<Statistic> GetStatisticsAsync()
+        {
+            var drinks = _drinkRepository.GetAllAsync().Result;
+            var ingredients = drinks.SelectMany(d => d.Ingredients).ToList();
+
+            var statistics = new Statistic
+            {
+                DrinksCount = drinks.Count(),
+                Alcoholic = drinks.Count(d => d.IsAlcoholic),
+                NonAlcoholic = drinks.Count(d => !d.IsAlcoholic),
+                MostPopularIngredient = ingredients.GroupBy(i => i.Name).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
+                MostPopularCategory = drinks.GroupBy(d => d.Category).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
+                Shots = drinks.Count(d => d.Category.Contains("Shot")),
+                Beer = drinks.Count(d => d.Category.Contains("Beer")),
+                Cocktails = drinks.Count(d => d.Category.Contains("Cocktail")),
+                OrdinaryDrink = drinks.Count(d => d.Category.Contains("Ordinary Drink")),
+                Other = drinks.Count(d => d.Category.Contains("Other"))
+            };
+
+            return Task.FromResult(statistics);
+        }
     }
 }

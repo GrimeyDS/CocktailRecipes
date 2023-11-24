@@ -20,6 +20,7 @@ namespace Pin.OpenData.Core.Repositories
 
         public Task CreateAsync(Drink entity)
         {
+            entity.Id = _drinks.Max(x => x.Id) + 1;
             _drinks.Add(entity);
             return Task.CompletedTask;
         }

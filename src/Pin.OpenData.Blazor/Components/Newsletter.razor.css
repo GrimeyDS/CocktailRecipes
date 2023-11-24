@@ -1,0 +1,14 @@
+﻿.btn-primary {
+    background-color: #354230;
+    border-color: #007bff;
+    display: inline-block
+}
+
+.alert {
+    width: 500px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+

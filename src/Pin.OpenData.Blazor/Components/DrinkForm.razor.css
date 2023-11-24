@@ -1,0 +1,16 @@
+﻿.row {
+margin-bottom: 10px;
+}
+
+.form {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.textfield {
+    height: 200px;
+}
+
+textarea {
+    height: 200px;
+}

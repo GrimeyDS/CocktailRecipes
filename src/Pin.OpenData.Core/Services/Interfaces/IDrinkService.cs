@@ -1,5 +1,7 @@
 ﻿
 
+using Pin.OpenData.Core.Entities;
+
 namespace Pin.OpenData.Core.Services.Interfaces
 {
     public interface IDrinkService<T> where T : class
@@ -9,5 +11,6 @@ namespace Pin.OpenData.Core.Services.Interfaces
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
+        Task<Statistic> GetStatisticsAsync();
     }
 }

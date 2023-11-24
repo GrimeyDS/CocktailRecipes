@@ -2,6 +2,7 @@
 using Pin.OpenData.Core.Entities;
 using Pin.OpenData.Core.Repositories.Interfaces;
 using Pin.OpenData.Core.Services.Interfaces;
+using System.Reflection;
 
 namespace Pin.OpenData.Core.Services
 {
@@ -16,14 +17,16 @@ namespace Pin.OpenData.Core.Services
 
         public Task CreateAsync(Drink entity)
         {
+            var drinks = _drinkRepository.GetAllAsync().Result;
+
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            if (entity.Ingredients == null || entity.Ingredients.Count == 0)
+            if (entity.Ingredients == null)
                 throw new ArgumentNullException(nameof(entity.Ingredients));
 
-            if (_drinkRepository.GetAllAsync().Result.Any(x => x.Name == entity.Name))
-                throw new ArgumentException("Drink with this name already exists");
+            if (drinks.Any(d => d.Name.ToUpper().Equals(entity.Name.ToUpper())))
+                 throw new ArgumentException("Drink with this name already exists");
 
             _drinkRepository.CreateAsync(entity);
             return Task.CompletedTask;
@@ -53,16 +56,45 @@ namespace Pin.OpenData.Core.Services
 
         public Task UpdateAsync(Drink entity)
         {
+            var drink = _drinkRepository.GetByIdAsync(entity.Id).Result;
+            var drinks = _drinkRepository.GetAllAsync().Result;
+
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            if (entity.Ingredients == null || entity.Ingredients.Count == 0)
+            if (entity.Ingredients == null)
                 throw new ArgumentNullException(nameof(entity.Ingredients));
 
-            if (_drinkRepository.GetAllAsync().Result.Any(x => x.Name == entity.Name))
-                throw new ArgumentException("Drink with this name already exists");
+
+            if (drink.Name.ToUpper() != entity.Name.ToUpper())
+            {
+                if (drinks.Any(d => d.Name.ToUpper().Equals(entity.Name.ToUpper())))
+                    throw new ArgumentException("Drink with this name already exists");
+            }
 
             return _drinkRepository.UpdateAsync(entity);
+        }
+
+        public Task<Statistic> GetStatisticsAsync()
+        {
+            var drinks = _drinkRepository.GetAllAsync().Result;
+            var ingredients = drinks.SelectMany(d => d.Ingredients).ToList();
+
+            var statistics = new Statistic
+            {
+                DrinksCount = drinks.Count(),
+                Alcoholic = drinks.Count(d => d.IsAlcoholic),
+                NonAlcoholic = drinks.Count(d => !d.IsAlcoholic),
+                MostPopularIngredient = ingredients.GroupBy(i => i.Name).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
+                MostPopularCategory = drinks.GroupBy(d => d.Category).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
+                Shots = drinks.Count(d => d.Category.Contains("Shot")),
+                Beer = drinks.Count(d => d.Category.Contains("Beer")),
+                Cocktails = drinks.Count(d => d.Category.Contains("Cocktail")),
+                OrdinaryDrink = drinks.Count(d => d.Category.Contains("Ordinary Drink")),
+                Other = drinks.Count(d => d.Category.Contains("Other"))
+            };
+
+            return Task.FromResult(statistics);
         }
     }
 }

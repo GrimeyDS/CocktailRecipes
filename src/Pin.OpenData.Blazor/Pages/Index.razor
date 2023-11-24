@@ -1,45 +1,96 @@
 ﻿@page "/"
-@using Pin.OpenData.Blazor.Components
-@using Pin.OpenData.Core.Entities;
-@using Pin.OpenData.Core.Services.Interfaces;
-@using static System.Net.Mime.MediaTypeNames;
+
 @inject IDrinkService<Drink> drinkService;
 
 <PageTitle>Index</PageTitle>
 
-<PageTitle>Index</PageTitle>
-
-<h1>Drinks:</h1>
+<Newsletter></Newsletter>
+<Statistics Top="true" Stats="statistics"></Statistics>
 
 @if(currentDrink == null)
 {
-    <DrinkList Drinks="allDrinks" OnAdd="AddDrink"></DrinkList>
+    <DrinkList Drinks="allDrinks" OnAdd="AddDrink" OnDelete="DeleteDrink" OnEdit="EditDrink" OnSelect="DetailsDrink"></DrinkList>
+}
+else if(showDetails)
+{
+    <DrinkDetails Drink="currentDrink" OnReturn="ReturnToDrinks"></DrinkDetails>
 }
 else
 {
-    <DrinkForm Drink="currentDrink" OnSave="SaveDrink"></DrinkForm>
+    <DrinkForm Drink="currentDrink" OnSave="SaveDrink" OnReturn="ReturnToDrinks"></DrinkForm>
 }
+
 
 
 @code {
     private Drink[] allDrinks;
-
     private Drink currentDrink = null;
+    private Statistic statistics;
+
+    private bool showDetails = false;
+    private string error;
 
     protected override async Task OnInitializedAsync()
     {
-       allDrinks = (await drinkService.GetAllAsync()).ToArray();
+        await RefreshDrinks();
     }
 
-private void AddDrink()
+    private async Task RefreshDrinks()
+    {
+        allDrinks = (await drinkService.GetAllAsync()).ToArray();
+        statistics = await drinkService.GetStatisticsAsync();
+        currentDrink = null;
+        showDetails = false;
+    }
+
+    private void AddDrink()
     {
         currentDrink = new Drink();
     }
 
+    private async void DeleteDrink(Drink drink)
+    {
+        try
+        {
+            await drinkService.DeleteAsync(drink.Id);
+            await RefreshDrinks();
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+    }
+
+    private async Task EditDrink(Drink drink)
+    {
+        currentDrink = await drinkService.GetByIdAsync(drink.Id);
+    }
+
     private async void SaveDrink(Drink drink)
     {
-        await drinkService.CreateAsync(drink);
-        allDrinks = (await drinkService.GetAllAsync()).ToArray();
-        currentDrink = null;
+        try
+        {
+            if (drink.Id == 0)
+                await drinkService.CreateAsync(drink);
+            else
+                await drinkService.UpdateAsync(drink);
+            await RefreshDrinks();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            error = ex.Message;
+        }
+    }
+
+    private async Task DetailsDrink(Drink drink)
+    {
+        currentDrink = await drinkService.GetByIdAsync(drink.Id);
+        showDetails = true;
+    }
+
+    private async Task ReturnToDrinks()
+    {
+        await RefreshDrinks();
     }
 }

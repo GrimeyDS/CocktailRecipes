@@ -1,0 +1,41 @@
+﻿<h3>Ingredients:</h3>
+
+@foreach (var ingredient in Drink.Ingredients)
+{
+    <div class="row">
+        <div class="col-3">
+            <InputText id="amount" class="form-control form-control-sm" @bind-Value="ingredient.Amount" placeholder="Amount"></InputText>
+            <ValidationMessage For="@(() => ingredient.Amount)" />
+        </div>
+        
+        <div class="col-9">
+        <InputText id="name" class="form-control form-control-sm" @bind-Value="ingredient.Name" placeholder="Ingredient"></InputText>
+        <ValidationMessage For="@(() => ingredient.Name)" />
+            </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Drink Drink { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if(Drink.Ingredients == null)
+        {
+            Drink.Ingredients = new List<Ingredient>();
+        };
+
+        var ingredientCount = Drink.Ingredients.Count;
+
+        if(ingredientCount <= 5)
+        {
+            for (int i = 0; i < 10 - ingredientCount; i++)
+            {
+                Drink.Ingredients.Add(new Ingredient());
+            };
+        };
+
+    }
+
+}

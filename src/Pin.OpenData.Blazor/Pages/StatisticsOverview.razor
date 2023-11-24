@@ -1,0 +1,15 @@
+﻿@page "/statistics"
+
+@inject IDrinkService<Drink> drinkService;
+
+<Newsletter></Newsletter>
+<Statistics Stats="statistics"></Statistics>
+
+@code {
+    private Statistic statistics;
+
+    protected override async Task OnInitializedAsync()
+    {
+        statistics = await drinkService.GetStatisticsAsync();
+    }
+}

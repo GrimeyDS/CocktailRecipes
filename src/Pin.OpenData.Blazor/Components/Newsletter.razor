@@ -1,0 +1,62 @@
+﻿@using Pin.OpenData.Core.Entities;
+
+@if(!isSubscribed)
+{
+    @if (Subscriber.IsSubscribed)
+    {
+        <div class="alert alert-secondary mt-4 row">
+            <div class="col-11">
+                <span class="oi oi-check me-2" aria-hidden="true"></span>
+                <strong>Thank you for subscribing!</strong>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-close" @onclick="e => CloseNewsletter()"></button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-secondary mt-4">
+            <span class="oi oi-pencil me-2" aria-hidden="true"></span>
+            <strong>Subscribe to our newsletter</strong>
+            <EditForm Model="Subscriber" OnValidSubmit="e => Subscribe()">
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+
+                <div class="row">
+                    <div class="col-9">
+                        <InputText id="email" class="form-control" @bind-Value="Subscriber.Email" placeholder="Email-address" />
+                        <ValidationMessage For="@(() => Subscriber.Email)" />
+                    </div>
+
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-primary">Subscribe!</button>
+                    </div>
+                </div>
+            </EditForm>
+
+        </div>
+    }
+}
+
+
+@code {
+    [Parameter]
+    public EventCallback OnSubscribe { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private bool isSubscribed = false;
+
+    private Subscriber Subscriber = new Subscriber();
+
+    private void Subscribe()
+    {
+        Subscriber.IsSubscribed = true;
+    }
+
+    private void CloseNewsletter()
+    {
+        isSubscribed = true;
+    }
+}

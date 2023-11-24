@@ -1,0 +1,40 @@
+﻿<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
+@foreach(var drink in Drinks)
+{
+    <div class="row">
+        <div class="col col-lg-3 mx-auto">
+            <div class="card" style="width: 18rem;" >
+                @if(string.IsNullOrEmpty(drink.ImageUrl))
+{
+                    <img src="../images/placeholderimage.png" class="card-img-top" @onclick="e => OnSelect.InvokeAsync(drink)">
+                }
+                else
+                {
+                    <img src="@drink.ImageUrl" class="card-img-top" @onclick="e => OnSelect.InvokeAsync(drink)">
+                }
+                <div class="card-body">
+                    <h5 class="card-title" @onclick="e => OnSelect.InvokeAsync(drink)">@drink.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@drink.Category</h6>
+                </div>
+                <div class="btn-container">
+                <button class="btn btn-info" @onclick="e => OnEdit.InvokeAsync(drink)">Edit</button>
+                <button class="btn btn-close" @onclick="e => OnDelete.InvokeAsync(drink)"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Drink[] Drinks { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+    [Parameter]
+    public EventCallback<Drink> OnDelete { get; set; }
+    [Parameter]
+    public EventCallback<Drink> OnEdit { get; set; }
+    [Parameter]
+    public EventCallback<Drink> OnSelect { get; set; }
+}

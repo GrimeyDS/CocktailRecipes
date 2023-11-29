@@ -1,0 +1,24 @@
+﻿@inject IJSRuntime jsRuntime;
+
+<canvas id="@IdName"></canvas>
+<canvas id="@IdName"></canvas>
+
+@code {
+    [Parameter]
+    public string IdName { get; set; }
+
+    [Parameter]
+    public string[] Key { get; set; }
+
+    [Parameter]
+    public int[] Value { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await jsRuntime.InvokeVoidAsync("displayChart", (object)Key, (object)Value, IdName);
+
+        }
+    }
+}

@@ -1,4 +1,5 @@
-﻿@if(Top)
+﻿
+@if(Top)
 {
     <div class="topDiv">
         <span class="top">Drinks: @Stats.DrinksCount -</span>
@@ -8,28 +9,10 @@
 }
 else
 {
-    <div>
+    <div class="graphs">
         <h4>Statistics</h4>
-            <span>Drinks: @Stats.DrinksCount</span>
-        <br />
-            <span>Alcoholic drinks: @Stats.Alcoholic</span>
-        <br />
-            <span>Non-alcoholic drinks: @Stats.NonAlcoholic</span>
-        <br />
-            <span>Shots: @Stats.Shots</span>
-        <br />
-            <span>Cocktails: @Stats.Cocktails</span>
-        <br />
-            <span>Beers: @Stats.Beer</span>
-        <br />
-            <span>Ordinary Drinks: @Stats.OrdinaryDrink</span>
-        <br />
-            <span>Other Drinks: @Stats.Other</span>
-        <br />
-            <span>Most pop. category: @Stats.MostPopularCategory</span>
-        <br />
-            <span>Most pop. ingredient: @Stats.MostPopularIngredient</span>
-        <br />
+        <Graph Key="Alcoholic" Value="AlcoholicValues" IdName="Alcoholic"></Graph>
+        <Graph Key="Category" Value="CategoryValues" IdName="Category"></Graph>
     </div>
 }
 
@@ -44,4 +27,22 @@ else
 
     [Parameter]
     public Statistic Stats { get; set; }
+
+    private string[] Alcoholic;
+    private int[] AlcoholicValues;
+
+    private string[] Category;
+    private int[] CategoryValues;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Top)
+        {
+            Alcoholic = new string[] { nameof(Stats.Alcoholic), nameof(Stats.NonAlcoholic) };
+            AlcoholicValues = new int[] { Stats.Alcoholic, Stats.NonAlcoholic };
+
+            Category = new string[] { nameof(Stats.Shots), nameof(Stats.Cocktails), nameof(Stats.Beer), nameof(Stats.OrdinaryDrink), nameof(Stats.Other) };
+            CategoryValues = new int[] { Stats.Shots, Stats.Cocktails, Stats.Beer, Stats.OrdinaryDrink, Stats.Other };
+        }
+    }
 }

@@ -24,7 +24,7 @@ namespace Pin.OpenData.Blazor.Pages
         private async Task RefreshDrinks()
         {
             allDrinks = (await DrinkService.GetAllAsync()).ToArray();
-            statistics = await DrinkService.GetStatisticsAsync();
+            statistics = await DrinkService.GetShortStatistics();
             currentDrink = null;
             showDetails = false;
         }

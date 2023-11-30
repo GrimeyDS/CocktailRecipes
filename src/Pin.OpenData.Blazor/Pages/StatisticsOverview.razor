@@ -4,13 +4,28 @@
 @inject IDrinkService<Drink> drinkService;
 
 <Newsletter></Newsletter>
-<Statistics Stats="statistics"></Statistics>
+
+<Statistics TModel="PopularityStatistic" Stats="popularityStatistics">
+    <StatisticsInfo>
+        <h1>Popularity:</h1>
+    </StatisticsInfo>
+</Statistics>
+
+<br />
+
+<Statistics TModel="GraphStatistic" Stats="graphStatistics">
+    <StatisticsInfo>
+        <h1>Graphs:</h1>
+    </StatisticsInfo>
+</Statistics>
 
 @code {
-    private Statistic statistics;
+    private GraphStatistic graphStatistics;
+    private PopularityStatistic popularityStatistics;
 
     protected override async Task OnInitializedAsync()
     {
-        statistics = await drinkService.GetStatisticsAsync();
+        graphStatistics = await drinkService.GetGraphStatistics();
+        popularityStatistics = await drinkService.GetPopularityStatistics();
     }
 }

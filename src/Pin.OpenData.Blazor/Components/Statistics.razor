@@ -1,6 +1,22 @@
-﻿@inherits DrinksComponentBase
+﻿@typeparam TModel where TModel : Statistic
 
-@if(Top)
+@if(Stats.GetType().Name == nameof(GraphStatistic))
+{
+    <div class="graphs">
+        @StatisticsInfo
+        <Graph Key="Alcoholic" Value="AlcoholicValues" IdName="Alcoholic"></Graph>
+        <Graph Key="Category" Value="CategoryValues" IdName="Category"></Graph>
+    </div>
+}
+else if (Stats.GetType().Name == nameof(PopularityStatistic))
+{
+    <div class="topDiv">
+        @StatisticsInfo
+        <p><b>Most popular category: </b>@((Stats as PopularityStatistic).MostPopularCategory)</p>
+        <p><b>Most popular Ingredient: </b>@((Stats as PopularityStatistic).MostPopularIngredient)</p>
+    </div>
+}
+else
 {
     <div class="topDiv">
         <span class="top">Drinks: @Stats.DrinksCount -</span>
@@ -8,24 +24,14 @@
         <span class="top">Non-alcoholic drinks: @Stats.NonAlcoholic</span>
     </div>
 }
-else
-{
-    <div class="graphs">
-        <h4>Statistics</h4>
-        <Graph Key="Alcoholic" Value="AlcoholicValues" IdName="Alcoholic"></Graph>
-        <Graph Key="Category" Value="CategoryValues" IdName="Category"></Graph>
-    </div>
-}
-
-
 
 
 @code {
     [Parameter]
-    public bool Top { get; set; }
+    public TModel Stats { get; set; }
 
     [Parameter]
-    public Statistic Stats { get; set; }
+    public RenderFragment StatisticsInfo { get; set; }
 
     private string[] Alcoholic;
     private int[] AlcoholicValues;
@@ -35,13 +41,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Top)
+        if (Stats.GetType().Name == (nameof(GraphStatistic)))
         {
-            Alcoholic = new string[] { nameof(Stats.Alcoholic), nameof(Stats.NonAlcoholic) };
-            AlcoholicValues = new int[] { Stats.Alcoholic, Stats.NonAlcoholic };
+            var graphStats = Stats as GraphStatistic;
 
-            Category = new string[] { nameof(Stats.Shots), nameof(Stats.Cocktails), nameof(Stats.Beer), nameof(Stats.OrdinaryDrink), nameof(Stats.Other) };
-            CategoryValues = new int[] { Stats.Shots, Stats.Cocktails, Stats.Beer, Stats.OrdinaryDrink, Stats.Other };
+            Alcoholic = new string[] { nameof(graphStats.Alcoholic), nameof(graphStats.NonAlcoholic) };
+            AlcoholicValues = new int[] { graphStats.Alcoholic, graphStats.NonAlcoholic };
+
+            Category = new string[] { nameof(graphStats.Shots), nameof(graphStats.Cocktails), nameof(graphStats.Beer), nameof(graphStats.OrdinaryDrink), nameof(graphStats.Other) };
+            CategoryValues = new int[] { graphStats.Shots, graphStats.Cocktails, graphStats.Beer, graphStats.OrdinaryDrink, graphStats.Other };
         }
     }
 }

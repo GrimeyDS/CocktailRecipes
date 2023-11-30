@@ -11,10 +11,12 @@ namespace Pin.OpenData.Blazor.Pages
 
         private Drink[] allDrinks;
         private Drink currentDrink = null;
+        private Drink drinkToDelete = null;
         private Statistic statistics;
         private string error;
 
-        private bool showDetails = false;
+        private bool showDetails;
+        private bool confirmDeletion;
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,12 +36,13 @@ namespace Pin.OpenData.Blazor.Pages
             currentDrink = new Drink();
         }
 
-        private async void DeleteDrink(Drink drink)
+        private async void DeleteDrink()
         {
             try
             {
-                await DrinkService.DeleteAsync(drink.Id);
+                await DrinkService.DeleteAsync(drinkToDelete.Id);
                 await RefreshDrinks();
+                confirmDeletion = false;
             }
             catch (Exception ex)
             {
@@ -78,6 +81,19 @@ namespace Pin.OpenData.Blazor.Pages
         private async Task ReturnToDrinks()
         {
             await RefreshDrinks();
+        }
+
+        private void DeleteConfirmation(Drink drink)
+        {
+            drinkToDelete = drink;
+            confirmDeletion = true;
+        }
+
+        private void Cancel()
+        {
+            currentDrink = null;
+            drinkToDelete = null;
+            confirmDeletion = false;
         }
     }
 }

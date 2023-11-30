@@ -1,0 +1,18 @@
+﻿<dialog open="true">
+    <button class="btn btn-close dialog" @onclick="e => OnCancel.InvokeAsync()"></button>
+    <p>@Message</p>
+    <form method="dialog">
+        <button @onclick="e => OnConfirm.InvokeAsync()">Delete</button>
+    </form>
+</dialog>
+
+@code {
+    [Parameter]
+    public string Message { get; set; }
+
+    [Parameter]
+    public EventCallback OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}

@@ -12,7 +12,7 @@ namespace Pin.OpenData.Core.Entities
         [Required]
         [StringLength(50, ErrorMessage = "Please provide a category not longer 50 characters.")]
         public string Category { get; set; }
-        [Url] public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
         public bool IsAlcoholic { get; set; }
         public ICollection<Ingredient> Ingredients { get; set; }
     }

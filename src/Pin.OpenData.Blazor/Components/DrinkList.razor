@@ -20,22 +20,11 @@
                 </div>
                 <div class="btn-container">
                 <button class="btn btn-info" @onclick="e => OnEdit.InvokeAsync(drink)">Edit</button>
-                <button class="btn btn-close" @onclick="e => ShowDeleteConfirmation(drink)"></button>
+                <button class="btn btn-close" @onclick="e => OnDelete.InvokeAsync(drink)"></button>
                 </div>
             </div>
         </div>
     </div>
-}
-
-@if (showDeleteConfirmation)
-{
-    <dialog open="true">
-        <button class="btn btn-close dialog" @onclick="e => CloseConfirmation()"></button>
-        <p>Are you sure you want to delete @selectedDrink.Name?</p>
-        <form method="dialog">
-            <button @onclick="e => ConfirmDelete()">Delete</button>
-        </form>
-    </dialog>
 }
 
 @code {
@@ -47,25 +36,4 @@
     public EventCallback<Drink> OnEdit { get; set; }
     [Parameter]
     public EventCallback<Drink> OnSelect { get; set; }
-
-    private bool showDeleteConfirmation;
-    private Drink selectedDrink;
-
-    private void ShowDeleteConfirmation(Drink drinkToDelete)
-    {
-        selectedDrink = drinkToDelete;
-        showDeleteConfirmation = true;
-    }
-
-    private void ConfirmDelete()
-    {
-        OnDelete.InvokeAsync(selectedDrink);
-        showDeleteConfirmation = false;
-    }
-
-    private void CloseConfirmation()
-    {
-        showDeleteConfirmation = false;
-        selectedDrink = null;
-    }
 }

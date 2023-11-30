@@ -1,4 +1,6 @@
-﻿<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
+﻿@inherits DrinksComponentBase
+
+<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
 @foreach(var drink in Drinks)
 {
     <div class="row">
@@ -10,7 +12,7 @@
                 }
                 else
                 {
-                    <img src="@drink.ImageUrl" class="card-img-top" @onclick="e => OnSelect.InvokeAsync(drink)">
+                    <img src="@drink.ImageUrl" onerror="this.onerror=null; this.src='../images/placeholderimage.png'" class="card-img-top" @onclick="e => OnSelect.InvokeAsync(drink)">
                 }
                 <div class="card-body">
                     <h5 class="card-title" @onclick="e => OnSelect.InvokeAsync(drink)">@drink.Name</h5>
@@ -26,9 +28,6 @@
 }
 
 @code {
-    [Parameter]
-    public Drink[] Drinks { get; set; }
-
     [Parameter]
     public EventCallback OnAdd { get; set; }
     [Parameter]

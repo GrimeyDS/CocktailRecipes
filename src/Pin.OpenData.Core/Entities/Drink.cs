@@ -9,6 +9,7 @@ namespace Pin.OpenData.Core.Entities
         public string Glass { get; set; }
         [StringLength(1000, ErrorMessage = "Please provide an instruction not longer 1000 characters.")]
         public string Instructions { get; set; }
+        [Required]
         [StringLength(50, ErrorMessage = "Please provide a category not longer 50 characters.")]
         public string Category { get; set; }
         public string ImageUrl { get; set; }

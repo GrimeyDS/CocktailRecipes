@@ -9,5 +9,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Pin.OpenData.Core\Pin.OpenData.Core.csproj" />
   </ItemGroup>
-
+  
 </Project>

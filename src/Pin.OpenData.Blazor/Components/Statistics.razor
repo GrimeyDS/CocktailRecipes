@@ -1,4 +1,22 @@
-﻿@if(Top)
+﻿@typeparam TModel where TModel : Statistic
+
+@if(Stats.GetType().Name == nameof(GraphStatistic))
+{
+    <div class="graphs">
+        @StatisticsInfo
+        <Graph Key="Alcoholic" Value="AlcoholicValues" IdName="Alcoholic"></Graph>
+        <Graph Key="Category" Value="CategoryValues" IdName="Category"></Graph>
+    </div>
+}
+else if (Stats.GetType().Name == nameof(PopularityStatistic))
+{
+    <div class="topDiv">
+        @StatisticsInfo
+        <p><b>Most popular category: </b>@((Stats as PopularityStatistic).MostPopularCategory)</p>
+        <p><b>Most popular Ingredient: </b>@((Stats as PopularityStatistic).MostPopularIngredient)</p>
+    </div>
+}
+else
 {
     <div class="topDiv">
         <span class="top">Drinks: @Stats.DrinksCount -</span>
@@ -6,42 +24,32 @@
         <span class="top">Non-alcoholic drinks: @Stats.NonAlcoholic</span>
     </div>
 }
-else
-{
-    <div>
-        <h4>Statistics</h4>
-            <span>Drinks: @Stats.DrinksCount</span>
-        <br />
-            <span>Alcoholic drinks: @Stats.Alcoholic</span>
-        <br />
-            <span>Non-alcoholic drinks: @Stats.NonAlcoholic</span>
-        <br />
-            <span>Shots: @Stats.Shots</span>
-        <br />
-            <span>Cocktails: @Stats.Cocktails</span>
-        <br />
-            <span>Beers: @Stats.Beer</span>
-        <br />
-            <span>Ordinary Drinks: @Stats.OrdinaryDrink</span>
-        <br />
-            <span>Other Drinks: @Stats.Other</span>
-        <br />
-            <span>Most pop. category: @Stats.MostPopularCategory</span>
-        <br />
-            <span>Most pop. ingredient: @Stats.MostPopularIngredient</span>
-        <br />
-    </div>
-}
-
-
 
 
 @code {
     [Parameter]
-    public Drink[] Drinks { get; set; }
-    [Parameter]
-    public bool Top { get; set; }
+    public TModel Stats { get; set; }
 
     [Parameter]
-    public Statistic Stats { get; set; }
+    public RenderFragment StatisticsInfo { get; set; }
+
+    private string[] Alcoholic;
+    private int[] AlcoholicValues;
+
+    private string[] Category;
+    private int[] CategoryValues;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Stats.GetType().Name == (nameof(GraphStatistic)))
+        {
+            var graphStats = Stats as GraphStatistic;
+
+            Alcoholic = new string[] { nameof(graphStats.Alcoholic), nameof(graphStats.NonAlcoholic) };
+            AlcoholicValues = new int[] { graphStats.Alcoholic, graphStats.NonAlcoholic };
+
+            Category = new string[] { nameof(graphStats.Shots), nameof(graphStats.Cocktails), nameof(graphStats.Beer), nameof(graphStats.OrdinaryDrink), nameof(graphStats.Other) };
+            CategoryValues = new int[] { graphStats.Shots, graphStats.Cocktails, graphStats.Beer, graphStats.OrdinaryDrink, graphStats.Other };
+        }
+    }
 }

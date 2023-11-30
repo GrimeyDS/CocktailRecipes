@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col col-lg-3 mx-auto">
             <div class="card" style="width: 18rem;" >
-                @if(!string.IsNullOrEmpty(drink.ImageUrl))
+                @if(string.IsNullOrEmpty(drink.ImageUrl))
 {
                     <img src="../images/placeholderimage.png" class="card-img-top" @onclick="e => OnSelect.InvokeAsync(drink)">
                 }

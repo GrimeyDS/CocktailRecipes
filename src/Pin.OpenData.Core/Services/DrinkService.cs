@@ -2,7 +2,6 @@
 using Pin.OpenData.Core.Entities;
 using Pin.OpenData.Core.Repositories.Interfaces;
 using Pin.OpenData.Core.Services.Interfaces;
-using System.Reflection;
 
 namespace Pin.OpenData.Core.Services
 {
@@ -75,7 +74,7 @@ namespace Pin.OpenData.Core.Services
             return _drinkRepository.UpdateAsync(entity);
         }
 
-        public Task<Statistic> GetStatisticsAsync()
+        public Task<Statistic> GetShortStatistics()
         {
             var drinks = _drinkRepository.GetAllAsync().Result;
             var ingredients = drinks.SelectMany(d => d.Ingredients).ToList();
@@ -85,13 +84,43 @@ namespace Pin.OpenData.Core.Services
                 DrinksCount = drinks.Count(),
                 Alcoholic = drinks.Count(d => d.IsAlcoholic),
                 NonAlcoholic = drinks.Count(d => !d.IsAlcoholic),
-                MostPopularIngredient = ingredients.GroupBy(i => i.Name).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
-                MostPopularCategory = drinks.GroupBy(d => d.Category).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
+            };
+
+            return Task.FromResult(statistics);
+        }
+
+        public Task<GraphStatistic> GetGraphStatistics()
+        {
+            var drinks = _drinkRepository.GetAllAsync().Result;
+            var ingredients = drinks.SelectMany(d => d.Ingredients).ToList();
+
+            var statistics = new GraphStatistic
+            {
+                DrinksCount = drinks.Count(),
+                Alcoholic = drinks.Count(d => d.IsAlcoholic),
+                NonAlcoholic = drinks.Count(d => !d.IsAlcoholic),
                 Shots = drinks.Count(d => d.Category.Contains("Shot")),
                 Beer = drinks.Count(d => d.Category.Contains("Beer")),
                 Cocktails = drinks.Count(d => d.Category.Contains("Cocktail")),
                 OrdinaryDrink = drinks.Count(d => d.Category.Contains("Ordinary Drink")),
                 Other = drinks.Count(d => d.Category.Contains("Other"))
+            };
+
+            return Task.FromResult(statistics);
+        }
+
+        public Task<PopularityStatistic> GetPopularityStatistics()
+        {
+            var drinks = _drinkRepository.GetAllAsync().Result;
+            var ingredients = drinks.SelectMany(d => d.Ingredients).ToList();
+
+            var statistics = new PopularityStatistic
+            {
+                DrinksCount = drinks.Count(),
+                Alcoholic = drinks.Count(d => d.IsAlcoholic),
+                NonAlcoholic = drinks.Count(d => !d.IsAlcoholic),
+                MostPopularIngredient = ingredients.GroupBy(i => i.Name).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
+                MostPopularCategory = drinks.GroupBy(d => d.Category).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault(),
             };
 
             return Task.FromResult(statistics);

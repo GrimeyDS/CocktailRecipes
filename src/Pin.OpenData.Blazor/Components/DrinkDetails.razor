@@ -2,7 +2,7 @@
 
 <button class="btn btn-warning" @onclick=" e=> OnReturn.InvokeAsync()">Return</button>
 
-<img src="@Drink.ImageUrl" />
+<img src="@Drink.ImageUrl" onerror="this.onerror=null; this.src='../images/placeholderimage.png'" />
 
 <div class="separator"></div>
 

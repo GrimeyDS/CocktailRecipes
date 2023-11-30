@@ -1,4 +1,4 @@
-﻿@using Pin.OpenData.Core.Entities;﻿
+﻿@inherits DrinksComponentBase
 
 <div class="form">
 <EditForm Model="@Drink" OnValidSubmit="e => OnSave.InvokeAsync(Drink)" >
@@ -56,12 +56,6 @@
 </div>
 
 @code {
-    [Parameter]
-    public Drink Drink { get; set; }
-
-    [Parameter]
-    public Ingredient Ingredient { get; set; }
-
     [Parameter]
     public EventCallback<Drink> OnSave { get; set; }
 

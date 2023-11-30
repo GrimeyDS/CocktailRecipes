@@ -1,4 +1,6 @@
-﻿<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
+﻿@inherits DrinksComponentBase
+
+<button class="btn btn-warning" @onclick="e => OnAdd.InvokeAsync()">Add Drink</button>
 @foreach(var drink in Drinks)
 {
     <div class="row">
@@ -37,9 +39,6 @@
 }
 
 @code {
-    [Parameter]
-    public Drink[] Drinks { get; set; }
-
     [Parameter]
     public EventCallback OnAdd { get; set; }
     [Parameter]

@@ -1,4 +1,4 @@
-﻿@using Pin.OpenData.Core.Entities;
+﻿@inherits DrinksComponentBase
 
 <button class="btn btn-warning" @onclick=" e=> OnReturn.InvokeAsync()">Return</button>
 
@@ -35,9 +35,6 @@
 
 
 @code {
-    [Parameter]
-    public Drink Drink { get; set; }
-
     [Parameter]
     public EventCallback OnReturn { get; set; }
 

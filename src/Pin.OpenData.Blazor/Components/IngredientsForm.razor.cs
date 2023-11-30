@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
-using Pin.OpenData.Core.Entities;
+﻿using Pin.OpenData.Core.Entities;
 
 namespace Pin.OpenData.Blazor.Components
 {
     public partial class IngredientsForm
     {
-        [Parameter]
-        public Drink Drink { get; set; }
-
         protected override void OnInitialized()
         {
             if (Drink.Ingredients == null)

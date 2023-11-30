@@ -1,4 +1,5 @@
-﻿
+﻿@inherits DrinksComponentBase
+
 @if(Top)
 {
     <div class="topDiv">
@@ -20,8 +21,6 @@ else
 
 
 @code {
-    [Parameter]
-    public Drink[] Drinks { get; set; }
     [Parameter]
     public bool Top { get; set; }
 

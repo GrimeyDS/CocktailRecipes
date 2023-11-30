@@ -46,3 +46,25 @@
 .card:hover {
     box-shadow: 0 0 30px #354230;
 }
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 15%;
+    z-index: 60;
+    background-color: #dbc8ba;
+    width: 400px;
+    border-color: darkorange;
+    border-radius: 5px;
+    border-width: 5px;
+}
+
+dialog button {
+    border-radius: 5px;
+}
+
+.dialog {
+    margin-right: 0!important;
+    margin-left: auto!important;
+    display: block;
+}
